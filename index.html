@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Link Portal | ศูนย์รวมลิงก์ทีม HR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb; 
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc; 
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Thai', sans-serif;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px; 
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #334155;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-main);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f1f5f9;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex-grow: 1; 
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+            font-size: 1.2rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>HR Link Portal</h1>
+        <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น อบรม, โปรโมชั่น, Dashboard...">
+    </header>
+
+    <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
+
+    <section class="category" id="cat-dashboard">
+        <h2 class="category-title">📊 แดชบอร์ดและรายงาน (Dashboards)</h2>
+        <div class="grid-container">
+            <a href="https://ktrp87br89-dot.github.io/9singDashBoardregisViewtraning/" target="_blank" class="card">
+                <h3 class="card-title">สรุปผลการเข้าอบรมพนักงานใหม่</h3>
+                <p class="card-desc">Live Dashboard แสดงข้อมูลสถิติและภาพรวมการเข้ารับการฝึกอบรมแบบเรียลไทม์</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="category" id="cat-training">
+        <h2 class="category-title">🎓 ระบบงานฝึกอบรม (Training & Onboarding)</h2>
+        <div class="grid-container">
+            <a href="https://ktrp87br89-dot.github.io/9sing-regis-traning-website/" target="_blank" class="card">
+                <h3 class="card-title">ลงทะเบียนอบรมพนักงานใหม่</h3>
+                <p class="card-desc">เว็บไซต์สำหรับให้พนักงานใหม่ลงทะเบียนเข้ารับการปฐมนิเทศและการฝึกอบรม</p>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/1nTPFHUMuria-67iCnAr0wWa9DKJQjrCXX0nvKMfBd6I/edit?gid=0&pli=1&authuser=0#gid=0" target="_blank" class="card">
+                <h3 class="card-title">HR Training System</h3>
+                <p class="card-desc">Google Sheet ฐานข้อมูลหลักสำหรับจัดการข้อมูลและสรุปผลการฝึกอบรมทั้งหมด</p>
+            </a>
+            
+            <a href="https://docs.google.com/spreadsheets/d/1EQ5iRDUjyoxJ-tB1niK2LhO0GqLDqI20R4S8DO7ibiE/edit?gid=1857683467#gid=1857683467" target="_blank" class="card">
+                <h3 class="card-title">ใบเซ็นต์ชื่ออบรม ประจำเดือน 2569</h3>
+                <p class="card-desc">ไฟล์ตารางบันทึกการเข้าร่วมและใบเซ็นชื่อเข้าอบรมของพนักงานในแต่ละเดือน</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="category" id="cat-retail">
+        <h2 class="category-title">🛍️ สินค้าและโปรโมชั่น (Retail & Promotions)</h2>
+        <div class="grid-container">
+            <a href="https://ktrp87br89-dot.github.io/Retail-online/" target="_blank" class="card">
+                <h3 class="card-title">หน้าเว็ปสินค้าและโปรโมชั่น RETAIL</h3>
+                <p class="card-desc">เว็บไซต์หลักสำหรับแสดงรายการสินค้า โปรโมชั่น และข้อมูลหน้าร้าน (Retail)</p>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/1Yi4fbWu8e0BRnTlXtRkCcp_3d6YeWpHnIpXWU4DLROY/edit?gid=2068798226#gid=2068798226" target="_blank" class="card">
+                <h3 class="card-title">ดาต้า Promo_Database</h3>
+                <p class="card-desc">ฐานข้อมูล Google Sheet รวบรวมข้อมูลโปรโมชั่นและแคมเปญต่างๆ</p>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // สคริปต์สำหรับระบบค้นหา
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let filter = this.value.toLowerCase(); 
+        let cards = document.querySelectorAll('.card'); 
+        let categories = document.querySelectorAll('.category'); 
+        let hasVisibleCards = false;
+
+        cards.forEach(function(card) {
+            let title = card.querySelector('.card-title').innerText.toLowerCase();
+            let desc = card.querySelector('.card-desc').innerText.toLowerCase();
+
+            if (title.includes(filter) || desc.includes(filter)) {
+                card.classList.remove('hidden');
+                hasVisibleCards = true;
+            } else {
+                card.classList.add('hidden'); 
+            }
+        });
+
+        categories.forEach(function(category) {
+            let visibleCardsInCategory = category.querySelectorAll('.card:not(.hidden)').length;
+            if (visibleCardsInCategory === 0) {
+                category.style.display = 'none';
+            } else {
+                category.style.display = 'block';
+            }
+        });
+
+        let noResultsMsg = document.getElementById('noResults');
+        if (!hasVisibleCards && filter !== "") {
+            noResultsMsg.style.display = 'block';
+        } else {
+            noResultsMsg.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
