@@ -31,26 +31,23 @@
             padding: 40px 20px;
         }
 
-        /* =========================================
-           ส่วนที่ 1: ตั้งค่าโลโก้บริษัทและส่วนหัว
-           ========================================= */
         header {
             text-align: center;
             margin-bottom: 50px;
         }
 
         .company-logo {
-            width: 150px; /* ปรับขนาดให้พอดี มองเห็นสิงห์ชัดเจน */
+            width: 150px; 
             height: auto;
             margin-bottom: 15px;
-            border-radius: 50%; /* ทำให้เป็นวงกลมสมบูรณ์รับกับรูปโลโก้ */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* เพิ่มเงาให้ดูมีมิติ */
+            border-radius: 50%; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
             transition: transform 0.3s ease;
-            background-color: white; /* ใส่พื้นหลังสีขาวกันภาพโปร่งใส */
+            background-color: white; 
         }
 
         .company-logo:hover {
-            transform: scale(1.05); /* ขยายใหญ่ขึ้นเล็กน้อยเมื่อเอาเมาส์ชี้ */
+            transform: scale(1.05); 
         }
 
         header h1 {
@@ -84,9 +81,6 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
-        /* =========================================
-           ส่วนที่ 2: ตั้งค่าหมวดหมู่และการ์ด
-           ========================================= */
         .category {
             margin-bottom: 50px;
         }
@@ -159,7 +153,7 @@
         
         <h1>HR Link Portal</h1>
         <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น เบอร์โทร, อบรม, โปรโมชั่น...">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น ผู้สมัครงาน, อบรม, โปรโมชั่น...">
     </header>
 
     <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
@@ -180,6 +174,16 @@
             <a href="https://ktrp87br89-dot.github.io/phonelist/" target="_blank" class="card">
                 <h3 class="card-title">รายชื่อผู้ติดต่อภายใน 9 Singha Broker</h3>
                 <p class="card-desc">สมุดโทรศัพท์ ช่องทางการติดต่อ และรายชื่อพนักงานภายในองค์กร</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="category" id="cat-recruitment">
+        <h2 class="category-title">👥 การสรรหาบุคลากร (Recruitment)</h2>
+        <div class="grid-container">
+            <a href="https://ktrp87br89-dot.github.io/JOB_update/" target="_blank" class="card">
+                <h3 class="card-title">UPDATE !! ผู้สมัครงาน</h3>
+                <p class="card-desc">เว็บไซต์สำหรับติดตามและอัปเดตสถานะผู้สมัครงานของ บริษัท ๙ สิงห์โบรกเกอร์ จำกัด</p>
             </a>
         </div>
     </section>
