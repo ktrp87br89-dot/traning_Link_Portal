@@ -14,6 +14,12 @@
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-muted: #64748b;
+            --sidebar-width: 280px;
+        }
+
+        /* เลื่อนหน้าจอแบบนุ่มนวลเวลาคลิกเมนู */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -25,47 +31,110 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* =========================================
+           โครงสร้างหลัก (Layout) แบ่งซ้าย-ขวา
+           ========================================= */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
+        /* =========================================
+           แถบเมนูด้านซ้าย (Sidebar)
+           ========================================= */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            padding: 30px 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .company-logo {
-            width: 150px; 
+            width: 120px; 
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-radius: 50%; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
             transition: transform 0.3s ease;
-            background-color: white; 
         }
 
         .company-logo:hover {
             transform: scale(1.05); 
         }
 
-        header h1 {
-            font-size: 2.5rem;
+        .sidebar h2 {
+            font-size: 1.2rem;
             color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 400;
+        }
+
+        .nav-menu a:hover {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            padding-left: 20px; /* ขยับข้อความนิดนึงตอนชี้เมาส์ */
+        }
+
+        /* =========================================
+           พื้นที่เนื้อหาด้านขวา (Main Content)
+           ========================================= */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+            max-width: 1200px;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--text-main);
             margin-bottom: 5px;
             margin-top: 0;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            margin-bottom: 25px;
         }
 
         .search-box {
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             padding: 15px 20px;
             font-size: 1rem;
             font-family: 'Noto Sans Thai', sans-serif;
@@ -81,8 +150,12 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
+        /* =========================================
+           หมวดหมู่และการ์ด
+           ========================================= */
         .category {
             margin-bottom: 50px;
+            padding-top: 20px; /* เผื่อพื้นที่ตอนกระโดดลงมา */
         }
 
         .category-title {
@@ -95,7 +168,7 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
             gap: 20px;
         }
 
@@ -119,7 +192,7 @@
         }
 
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin: 0 0 10px 0;
             color: var(--primary-color);
@@ -143,90 +216,125 @@
             font-size: 1.2rem;
             display: none;
         }
+
+        /* =========================================
+           การแสดงผลบนหน้าจอมือถือ (Responsive)
+           ========================================= */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column; /* เปลี่ยนเป็นเรียงจากบนลงล่าง */
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                padding: 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
+<div class="app-container">
+    
+    <aside class="sidebar">
         <img src="https://i.postimg.cc/MK6g9SWJ/logo.png" alt="9 Singha Broker Logo" class="company-logo">
+        <h2>9 Singha Broker</h2>
         
-        <h1>HR Link Portal</h1>
-        <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น ผู้สมัครงาน, อบรม, โปรโมชั่น...">
-    </header>
+        <ul class="nav-menu">
+            <li><a href="#cat-dashboard">📊 แดชบอร์ดและรายงาน</a></li>
+            <li><a href="#cat-contacts">📞 ข้อมูลติดต่อภายใน</a></li>
+            <li><a href="#cat-recruitment">👥 การสรรหาบุคลากร</a></li>
+            <li><a href="#cat-training">🎓 ระบบงานฝึกอบรม</a></li>
+            <li><a href="#cat-retail">🛍️ สินค้าและโปรโมชั่น</a></li>
+        </ul>
+    </aside>
 
-    <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
+    <main class="main-content">
+        <header>
+            <h1>HR Link Portal</h1>
+            <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น ผู้สมัครงาน, อบรม...">
+        </header>
 
-    <section class="category" id="cat-dashboard">
-        <h2 class="category-title">📊 แดชบอร์ดและรายงาน (Dashboards)</h2>
-        <div class="grid-container">
-            <a href="https://ktrp87br89-dot.github.io/9singDashBoardregisViewtraning/" target="_blank" class="card">
-                <h3 class="card-title">สรุปผลการเข้าอบรมพนักงานใหม่</h3>
-                <p class="card-desc">Live Dashboard แสดงข้อมูลสถิติและภาพรวมการเข้ารับการฝึกอบรมแบบเรียลไทม์</p>
-            </a>
-        </div>
-    </section>
+        <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
 
-    <section class="category" id="cat-contacts">
-        <h2 class="category-title">📞 ข้อมูลติดต่อ (Contacts & Directory)</h2>
-        <div class="grid-container">
-            <a href="https://ktrp87br89-dot.github.io/phonelist/" target="_blank" class="card">
-                <h3 class="card-title">รายชื่อผู้ติดต่อภายใน 9 Singha Broker</h3>
-                <p class="card-desc">สมุดโทรศัพท์ ช่องทางการติดต่อ และรายชื่อพนักงานภายในองค์กร</p>
-            </a>
-        </div>
-    </section>
+        <section class="category" id="cat-dashboard">
+            <h2 class="category-title">📊 แดชบอร์ดและรายงาน (Dashboards)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/9singDashBoardregisViewtraning/" target="_blank" class="card">
+                    <h3 class="card-title">สรุปผลการเข้าอบรมพนักงานใหม่</h3>
+                    <p class="card-desc">Live Dashboard แสดงข้อมูลสถิติและภาพรวมการเข้ารับการฝึกอบรมแบบเรียลไทม์</p>
+                </a>
+            </div>
+        </section>
 
-    <section class="category" id="cat-recruitment">
-        <h2 class="category-title">👥 การสรรหาบุคลากร (Recruitment)</h2>
-        <div class="grid-container">
-            <a href="https://ktrp87br89-dot.github.io/JOB_update/" target="_blank" class="card">
-                <h3 class="card-title">UPDATE !! ผู้สมัครงาน</h3>
-                <p class="card-desc">เว็บไซต์สำหรับติดตามและอัปเดตสถานะผู้สมัครงานของ บริษัท ๙ สิงห์โบรกเกอร์ จำกัด</p>
-            </a>
-        </div>
-    </section>
+        <section class="category" id="cat-contacts">
+            <h2 class="category-title">📞 ข้อมูลติดต่อ (Contacts & Directory)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/phonelist/" target="_blank" class="card">
+                    <h3 class="card-title">รายชื่อผู้ติดต่อภายใน 9 Singha Broker</h3>
+                    <p class="card-desc">สมุดโทรศัพท์ ช่องทางการติดต่อ และรายชื่อพนักงานภายในองค์กร</p>
+                </a>
+            </div>
+        </section>
 
-    <section class="category" id="cat-training">
-        <h2 class="category-title">🎓 ระบบงานฝึกอบรม (Training & Onboarding)</h2>
-        <div class="grid-container">
-            <a href="https://ktrp87br89-dot.github.io/9sing-regis-traning-website/" target="_blank" class="card">
-                <h3 class="card-title">ลงทะเบียนอบรมพนักงานใหม่</h3>
-                <p class="card-desc">เว็บไซต์สำหรับให้พนักงานใหม่ลงทะเบียนเข้ารับการปฐมนิเทศและการฝึกอบรม</p>
-            </a>
+        <section class="category" id="cat-recruitment">
+            <h2 class="category-title">👥 การสรรหาบุคลากร (Recruitment)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/JOB_update/" target="_blank" class="card">
+                    <h3 class="card-title">UPDATE !! ผู้สมัครงาน</h3>
+                    <p class="card-desc">เว็บไซต์สำหรับติดตามและอัปเดตสถานะผู้สมัครงานของ บริษัท ๙ สิงห์โบรกเกอร์ จำกัด</p>
+                </a>
+            </div>
+        </section>
 
-            <a href="https://docs.google.com/spreadsheets/d/1nTPFHUMuria-67iCnAr0wWa9DKJQjrCXX0nvKMfBd6I/edit?gid=0&pli=1&authuser=0#gid=0" target="_blank" class="card">
-                <h3 class="card-title">HR Training System</h3>
-                <p class="card-desc">Google Sheet ฐานข้อมูลหลักสำหรับจัดการข้อมูลและสรุปผลการฝึกอบรมทั้งหมด</p>
-            </a>
-            
-            <a href="https://docs.google.com/spreadsheets/d/1EQ5iRDUjyoxJ-tB1niK2LhO0GqLDqI20R4S8DO7ibiE/edit?gid=1857683467#gid=1857683467" target="_blank" class="card">
-                <h3 class="card-title">ใบเซ็นต์ชื่ออบรม ประจำเดือน 2569</h3>
-                <p class="card-desc">ไฟล์ตารางบันทึกการเข้าร่วมและใบเซ็นชื่อเข้าอบรมของพนักงานในแต่ละเดือน</p>
-            </a>
-        </div>
-    </section>
+        <section class="category" id="cat-training">
+            <h2 class="category-title">🎓 ระบบงานฝึกอบรม (Training & Onboarding)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/9sing-regis-traning-website/" target="_blank" class="card">
+                    <h3 class="card-title">ลงทะเบียนอบรมพนักงานใหม่</h3>
+                    <p class="card-desc">เว็บไซต์สำหรับให้พนักงานใหม่ลงทะเบียนเข้ารับการปฐมนิเทศและการฝึกอบรม</p>
+                </a>
 
-    <section class="category" id="cat-retail">
-        <h2 class="category-title">🛍️ สินค้าและโปรโมชั่น (Retail & Promotions)</h2>
-        <div class="grid-container">
-            <a href="https://ktrp87br89-dot.github.io/Retail-online/" target="_blank" class="card">
-                <h3 class="card-title">หน้าเว็ปสินค้าและโปรโมชั่น RETAIL</h3>
-                <p class="card-desc">เว็บไซต์หลักสำหรับแสดงรายการสินค้า โปรโมชั่น และข้อมูลหน้าร้าน (Retail)</p>
-            </a>
+                <a href="https://docs.google.com/spreadsheets/d/1nTPFHUMuria-67iCnAr0wWa9DKJQjrCXX0nvKMfBd6I/edit?gid=0&pli=1&authuser=0#gid=0" target="_blank" class="card">
+                    <h3 class="card-title">HR Training System</h3>
+                    <p class="card-desc">Google Sheet ฐานข้อมูลหลักสำหรับจัดการข้อมูลและสรุปผลการฝึกอบรมทั้งหมด</p>
+                </a>
+                
+                <a href="https://docs.google.com/spreadsheets/d/1EQ5iRDUjyoxJ-tB1niK2LhO0GqLDqI20R4S8DO7ibiE/edit?gid=1857683467#gid=1857683467" target="_blank" class="card">
+                    <h3 class="card-title">ใบเซ็นต์ชื่ออบรม ประจำเดือน 2569</h3>
+                    <p class="card-desc">ไฟล์ตารางบันทึกการเข้าร่วมและใบเซ็นชื่อเข้าอบรมของพนักงานในแต่ละเดือน</p>
+                </a>
+            </div>
+        </section>
 
-            <a href="https://docs.google.com/spreadsheets/d/1Yi4fbWu8e0BRnTlXtRkCcp_3d6YeWpHnIpXWU4DLROY/edit?gid=2068798226#gid=2068798226" target="_blank" class="card">
-                <h3 class="card-title">ดาต้า Promo_Database</h3>
-                <p class="card-desc">ฐานข้อมูล Google Sheet รวบรวมข้อมูลโปรโมชั่นและแคมเปญต่างๆ</p>
-            </a>
-        </div>
-    </section>
+        <section class="category" id="cat-retail">
+            <h2 class="category-title">🛍️ สินค้าและโปรโมชั่น (Retail & Promotions)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/Retail-online/" target="_blank" class="card">
+                    <h3 class="card-title">หน้าเว็ปสินค้าและโปรโมชั่น RETAIL</h3>
+                    <p class="card-desc">เว็บไซต์หลักสำหรับแสดงรายการสินค้า โปรโมชั่น และข้อมูลหน้าร้าน (Retail)</p>
+                </a>
 
+                <a href="https://docs.google.com/spreadsheets/d/1Yi4fbWu8e0BRnTlXtRkCcp_3d6YeWpHnIpXWU4DLROY/edit?gid=2068798226#gid=2068798226" target="_blank" class="card">
+                    <h3 class="card-title">ดาต้า Promo_Database</h3>
+                    <p class="card-desc">ฐานข้อมูล Google Sheet รวบรวมข้อมูลโปรโมชั่นและแคมเปญต่างๆ</p>
+                </a>
+            </div>
+        </section>
+    </main>
 </div>
 
 <script>
-    // สคริปต์สำหรับระบบค้นหา
+    // สคริปต์สำหรับระบบค้นหา (ทำงานเฉพาะในส่วน Main Content)
     document.getElementById('searchInput').addEventListener('input', function() {
         let filter = this.value.toLowerCase(); 
         let cards = document.querySelectorAll('.card'); 
