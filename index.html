@@ -17,7 +17,6 @@
             --sidebar-width: 280px;
         }
 
-        /* เลื่อนหน้าจอแบบนุ่มนวลเวลาคลิกเมนู */
         html {
             scroll-behavior: smooth;
         }
@@ -31,17 +30,13 @@
             line-height: 1.6;
         }
 
-        /* =========================================
-           โครงสร้างหลัก (Layout) แบ่งซ้าย-ขวา
-           ========================================= */
+        /* โครงสร้างหลัก (Layout) */
         .app-container {
             display: flex;
             min-height: 100vh;
         }
 
-        /* =========================================
-           แถบเมนูด้านซ้าย (Sidebar)
-           ========================================= */
+        /* แถบเมนูด้านซ้าย (Sidebar) */
         .sidebar {
             width: var(--sidebar-width);
             background-color: #ffffff;
@@ -102,12 +97,10 @@
         .nav-menu a:hover {
             background-color: #eff6ff;
             color: var(--primary-color);
-            padding-left: 20px; /* ขยับข้อความนิดนึงตอนชี้เมาส์ */
+            padding-left: 20px; 
         }
 
-        /* =========================================
-           พื้นที่เนื้อหาด้านขวา (Main Content)
-           ========================================= */
+        /* พื้นที่เนื้อหาด้านขวา (Main Content) */
         .main-content {
             flex: 1;
             padding: 40px;
@@ -150,12 +143,10 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
-        /* =========================================
-           หมวดหมู่และการ์ด
-           ========================================= */
+        /* หมวดหมู่และการ์ด */
         .category {
             margin-bottom: 50px;
-            padding-top: 20px; /* เผื่อพื้นที่ตอนกระโดดลงมา */
+            padding-top: 20px; 
         }
 
         .category-title {
@@ -217,12 +208,10 @@
             display: none;
         }
 
-        /* =========================================
-           การแสดงผลบนหน้าจอมือถือ (Responsive)
-           ========================================= */
+        /* การแสดงผลบนหน้าจอมือถือ (Responsive) */
         @media (max-width: 768px) {
             .app-container {
-                flex-direction: column; /* เปลี่ยนเป็นเรียงจากบนลงล่าง */
+                flex-direction: column; 
             }
             
             .sidebar {
@@ -253,6 +242,7 @@
             <li><a href="#cat-contacts">📞 ข้อมูลติดต่อภายใน</a></li>
             <li><a href="#cat-recruitment">👥 การสรรหาบุคลากร</a></li>
             <li><a href="#cat-training">🎓 ระบบงานฝึกอบรม</a></li>
+            <li><a href="#cat-stock">📦 เบิกจ่าย น้ำดื่มและยา</a></li>
             <li><a href="#cat-retail">🛍️ สินค้าและโปรโมชั่น</a></li>
         </ul>
     </aside>
@@ -261,7 +251,7 @@
         <header>
             <h1>HR Link Portal</h1>
             <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการที่ต้องการ เช่น ผู้สมัครงาน, อบรม...">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการ เช่น น้ำดื่ม, เบิกยา, อบรม...">
         </header>
 
         <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
@@ -316,6 +306,29 @@
             </div>
         </section>
 
+        <section class="category" id="cat-stock">
+            <h2 class="category-title">📦 เบิกจ่าย น้ำดื่มและยา (Stock HR)</h2>
+            <div class="grid-container">
+                <a href="https://ktrp87br89-dot.github.io/Drinking-water/" target="_blank" class="card">
+                    <h3 class="card-title">ระบบเบิกน้ำดื่ม</h3>
+                    <p class="card-desc">เว็บไซต์สำหรับทำรายการเบิกน้ำดื่มประจำวันสำหรับพนักงาน</p>
+                </a>
+                <a href="https://docs.google.com/spreadsheets/d/1UoXeRabRrSre7yuR4CU4o8FFbm4FmBWM-3bews6U2Q8/edit?gid=0#gid=0" target="_blank" class="card">
+                    <h3 class="card-title">ฐานข้อมูลสต็อกน้ำดื่ม</h3>
+                    <p class="card-desc">Google Sheet สรุปรายการเบิกจ่ายและจัดการสต็อกน้ำดื่มคงเหลือ</p>
+                </a>
+                
+                <a href="https://ktrp87br89-dot.github.io/e-pharmacy/" target="_blank" class="card">
+                    <h3 class="card-title">ระบบเบิกยา (e-Pharmacy)</h3>
+                    <p class="card-desc">เว็บไซต์สำหรับทำรายการเบิกยาสามัญประจำบ้านสำหรับพนักงาน</p>
+                </a>
+                <a href="https://docs.google.com/spreadsheets/d/1HPfE9rlFcYZnYd_Y9ZYnrzqIlt1A61aYVf6PK4ZAcGI/edit?resourcekey=&gid=236272392#gid=236272392" target="_blank" class="card">
+                    <h3 class="card-title">ฐานข้อมูลสต็อกยา</h3>
+                    <p class="card-desc">Google Sheet สรุปรายการเบิกจ่ายและจัดการสต็อกยาสามัญประจำบริษัท</p>
+                </a>
+            </div>
+        </section>
+
         <section class="category" id="cat-retail">
             <h2 class="category-title">🛍️ สินค้าและโปรโมชั่น (Retail & Promotions)</h2>
             <div class="grid-container">
@@ -334,7 +347,7 @@
 </div>
 
 <script>
-    // สคริปต์สำหรับระบบค้นหา (ทำงานเฉพาะในส่วน Main Content)
+    // สคริปต์สำหรับระบบค้นหา
     document.getElementById('searchInput').addEventListener('input', function() {
         let filter = this.value.toLowerCase(); 
         let cards = document.querySelectorAll('.card'); 
