@@ -1,438 +1,1048 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HR Link Portal | 9 Singha Broker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2563eb; 
-            --primary-hover: #1d4ed8;
-            --bg-color: #f8fafc; 
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --sidebar-width: 280px;
-        }
+    :root {
+        --navy:       #0f1b2d;
+        --navy-mid:   #162236;
+        --gold:       #d4a843;
+        --gold-light: #f0c967;
+        --gold-dim:   rgba(212,168,67,0.15);
 
-        html {
-            scroll-behavior: smooth;
-        }
+        --bg:         #f1f5f9;
+        --surface:    #ffffff;
+        --surface-2:  #f8fafc;
+        --border:     #e2e8f0;
+        --text:       #1e293b;
+        --text-muted: #64748b;
+        --shadow:     0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+        --shadow-lg:  0 8px 32px rgba(0,0,0,0.12);
+        --topbar-bg:  #ffffff;
+        --topbar-bdr: #e2e8f0;
 
-        body {
-            font-family: 'Noto Sans Thai', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+        --c-dashboard: #6366f1;
+        --c-contact:   #10b981;
+        --c-recruit:   #f59e0b;
+        --c-doc:       #3b82f6;
+        --c-training:  #a855f7;
+        --c-stock:     #ef4444;
+        --c-retail:    #ec4899;
 
-        /* โครงสร้างหลัก (Layout) */
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
+        --sidebar-w: 285px;
+    }
 
-        /* แถบเมนูด้านซ้าย (Sidebar) */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: #ffffff;
-            border-right: 1px solid #e2e8f0;
-            padding: 30px 20px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            box-sizing: border-box;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    [data-theme="dark"] {
+        --bg:         #0d1117;
+        --surface:    #161b22;
+        --surface-2:  #21262d;
+        --border:     #30363d;
+        --text:       #e6edf3;
+        --text-muted: #7d8590;
+        --shadow:     0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.25);
+        --shadow-lg:  0 8px 32px rgba(0,0,0,0.4);
+        --topbar-bg:  #161b22;
+        --topbar-bdr: #30363d;
+    }
 
-        .company-logo {
-            width: 120px; 
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 50%; 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
-            transition: transform 0.3s ease;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Sarabun','Noto Sans Thai',sans-serif;
+        background: var(--bg); color: var(--text);
+        line-height: 1.65; transition: background 0.3s, color 0.3s;
+    }
 
-        .company-logo:hover {
-            transform: scale(1.05); 
-        }
+    /* ── LAYOUT ── */
+    .layout { display: flex; min-height: 100vh; }
 
-        .sidebar h2 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-top: 0;
-            margin-bottom: 30px;
-            text-align: center;
-        }
+    /* ── SIDEBAR ── */
+    .sidebar {
+        width: var(--sidebar-w);
+        background: linear-gradient(175deg, var(--navy) 0%, var(--navy-mid) 60%, #1a2e4a 100%);
+        position: sticky; top: 0; height: 100vh;
+        overflow-y: auto; display: flex; flex-direction: column; flex-shrink: 0;
+        border-right: 1px solid rgba(255,255,255,0.06);
+        scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;
+        z-index: 80;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
-        .nav-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            width: 100%;
-        }
+    .sidebar-brand {
+        padding: 26px 24px 18px;
+        display: flex; flex-direction: column; align-items: center;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .brand-logo-wrap {
+        width: 76px; height: 76px; border-radius: 50%;
+        border: 2px solid var(--gold);
+        box-shadow: 0 0 0 5px var(--gold-dim), 0 8px 24px rgba(0,0,0,0.4);
+        overflow: hidden; margin-bottom: 12px; transition: box-shadow 0.3s;
+    }
+    .brand-logo-wrap:hover { box-shadow: 0 0 0 7px rgba(212,168,67,0.22), 0 8px 32px rgba(0,0,0,0.5); }
+    .brand-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-name { font-size: 1rem; font-weight: 700; color: var(--gold-light); text-align: center; }
+    .brand-sub  { font-size: 0.65rem; color: rgba(255,255,255,0.35); margin-top: 3px; letter-spacing: 1.5px; text-transform: uppercase; }
 
-        .nav-menu li {
-            margin-bottom: 10px;
-        }
+    .sidebar-search { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .sidebar-search-inner { position: relative; display: flex; align-items: center; }
+    .sidebar-search-inner svg { position: absolute; left: 10px; color: rgba(255,255,255,0.3); width: 14px; height: 14px; }
+    .sidebar-search input {
+        width: 100%; background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+        padding: 8px 12px 8px 30px; color: #fff;
+        font-family: inherit; font-size: 0.8rem; outline: none; transition: all 0.25s;
+    }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.3); }
+    .sidebar-search input:focus { background: rgba(255,255,255,0.1); border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,168,67,0.15); }
 
-        .nav-menu a {
-            display: block;
-            padding: 12px 15px;
-            color: var(--text-main);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            font-weight: 400;
-        }
+    .nav-section { padding: 12px 12px 0; flex: 1; }
+    .nav-label   { font-size: 0.62rem; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,255,255,0.28); padding: 0 8px; margin-bottom: 5px; }
+    .nav-menu    { list-style: none; margin-bottom: 18px; }
+    .nav-menu li { margin-bottom: 2px; }
+    .nav-menu a  {
+        display: flex; align-items: center; gap: 9px;
+        padding: 9px 11px; color: rgba(255,255,255,0.6);
+        text-decoration: none; border-radius: 8px;
+        font-size: 0.84rem; font-weight: 500; transition: all 0.2s; position: relative;
+    }
+    .nav-menu a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+    .nav-menu a.active { background: var(--gold-dim); color: var(--gold-light); font-weight: 600; }
+    .nav-menu a.active::before {
+        content:''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+        width: 3px; height: 60%; background: var(--gold); border-radius: 0 3px 3px 0;
+    }
+    .nav-dot   { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .nav-count { margin-left: auto; font-size: 0.65rem; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); padding: 1px 6px; border-radius: 20px; }
 
-        .nav-menu a:hover {
-            background-color: #eff6ff;
-            color: var(--primary-color);
-            padding-left: 20px; 
-        }
+    .sidebar-footer { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .sidebar-footer p { font-size: 0.67rem; color: rgba(255,255,255,0.2); text-align: center; }
 
-        /* พื้นที่เนื้อหาด้านขวา (Main Content) */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            box-sizing: border-box;
-            max-width: 1200px;
-        }
+    /* ── MAIN ── */
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-        header {
-            margin-bottom: 40px;
-        }
+    .topbar {
+        background: var(--topbar-bg); border-bottom: 1px solid var(--topbar-bdr);
+        padding: 13px 36px; display: flex; align-items: center; justify-content: space-between;
+        position: sticky; top: 0; z-index: 50;
+        transition: background 0.3s, border-color 0.3s;
+    }
+    .topbar-left  { display: flex; align-items: center; gap: 12px; }
+    .topbar-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .topbar-sub   { font-size: 0.75rem; color: var(--text-muted); }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .badge-pill   { font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+    .badge-hr     { background: #eff6ff; color: #2563eb; }
+    [data-theme="dark"] .badge-hr { background: rgba(59,130,246,0.15); color: #93c5fd; }
+    .date-pill    { font-size: 0.72rem; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; }
 
-        header h1 {
-            font-size: 2rem;
-            color: var(--text-main);
-            margin-bottom: 5px;
-            margin-top: 0;
-        }
+    .theme-toggle {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; font-size: 1rem; transition: all 0.2s;
+    }
+    .theme-toggle:hover { background: var(--border); }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 25px;
-        }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 5px; color: var(--text); }
 
-        .search-box {
-            width: 100%;
-            max-width: 600px;
-            padding: 15px 20px;
-            font-size: 1rem;
-            font-family: 'Noto Sans Thai', sans-serif;
-            border: 2px solid #e2e8f0;
-            border-radius: 50px; 
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
+    /* ── CONTENT ── */
+    .content { padding: 28px 36px 60px; max-width: 1280px; }
 
-        .search-box:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-        }
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 28px; }
+    .stat-card  {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+        padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+        transition: box-shadow 0.2s, background 0.3s, border-color 0.3s;
+    }
+    .stat-card:hover { box-shadow: var(--shadow); }
+    .stat-icon  { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .stat-info .num { font-size: 1.35rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-info .lbl { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* หมวดหมู่และการ์ด */
-        .category {
-            margin-bottom: 50px;
-            padding-top: 20px; 
-        }
+    /* Pinned section */
+    #pinnedSection { margin-bottom: 32px; display: none; animation: fadeUp 0.4s ease both; scroll-margin-top: 90px; }
+    #pinned { scroll-margin-top: 90px; }
+    .pinned-header {
+        display: flex; align-items: center; gap: 10px;
+        padding-bottom: 12px; margin-bottom: 16px;
+        border-bottom: 2px solid var(--gold);
+    }
+    .pinned-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .pinned-count { margin-left: auto; font-size: 0.7rem; background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(212,168,67,0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700; }
+    #pinnedGrid   { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; }
 
-        .category-title {
-            font-size: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #334155;
-        }
+    /* No results */
+    .no-results { display: none; flex-direction: column; align-items: center; padding: 56px 20px; color: var(--text-muted); gap: 10px; }
+    .no-results .icon { font-size: 2.8rem; }
+    .no-results p { font-size: 0.9rem; }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px;
-        }
+    /* Category */
+    .category { margin-bottom: 40px; scroll-margin-top: 76px; }
+    .cat-header {
+        display: flex; align-items: center; gap: 11px;
+        margin-bottom: 16px; padding-bottom: 12px;
+        border-bottom: 1px solid var(--border); transition: border-color 0.3s;
+    }
+    .cat-icon-wrap { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .cat-title  { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .cat-badge  { margin-left: auto; font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted); }
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            text-decoration: none;
-            color: var(--text-main);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #f1f5f9;
-        }
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px,1fr)); gap: 14px; }
 
-        .card:hover {
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-color: #cbd5e1;
-        }
+    /* Card */
+    .card {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+        text-decoration: none; color: var(--text);
+        display: flex; flex-direction: column; overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.3s;
+        position: relative;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #94a3b8; }
+    [data-theme="dark"] .card:hover { border-color: #4d5966; }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-            color: var(--primary-color);
-        }
+    /* Tag ribbon */
+    .card-ribbon {
+        position: absolute; top: 10px; right: 10px; z-index: 2;
+        font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px;
+        padding: 3px 8px; border-radius: 6px; text-transform: uppercase;
+    }
+    .ribbon-new     { background: #dcfce7; color: #15803d; }
+    .ribbon-updated { background: #fef9c3; color: #a16207; }
+    [data-theme="dark"] .ribbon-new     { background: rgba(21,128,61,0.25);  color: #86efac; }
+    [data-theme="dark"] .ribbon-updated { background: rgba(161,98,7,0.25);   color: #fde047; }
 
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0;
-            flex-grow: 1; 
-        }
-        
-        .hidden {
-            display: none !important;
-        }
+    .card-top-bar  { height: 4px; width: 100%; flex-shrink: 0; }
+    .card-body     { padding: 16px 18px 14px; flex: 1; display: flex; flex-direction: column; }
+    .card-type-badge {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 0.62rem; font-weight: 700; padding: 3px 8px;
+        border-radius: 6px; margin-bottom: 9px; align-self: flex-start;
+    }
+    .card-title { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 7px; line-height: 1.45; }
+    .card-desc  { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; flex-grow: 1; }
+    .card-footer {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 9px 18px 13px; border-top: 1px solid var(--border); transition: border-color 0.3s;
+    }
+    .card-link-hint { font-size: 0.7rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .card-actions   { display: flex; align-items: center; gap: 6px; }
 
-        .no-results {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 20px;
-            font-size: 1.2rem;
-            display: none;
-        }
+    /* Favorite button */
+    .fav-btn {
+        width: 28px; height: 28px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+        color: var(--text-muted); flex-shrink: 0;
+    }
+    .fav-btn:hover { background: #fef3c7; border-color: #fbbf24; transform: scale(1.15); }
+    .fav-btn.pinned { background: #fef3c7; border-color: #fbbf24; color: #d97706; }
+    [data-theme="dark"] .fav-btn:hover,
+    [data-theme="dark"] .fav-btn.pinned { background: rgba(251,191,36,0.15); border-color: #fbbf24; color: #fbbf24; }
 
-        /* การแสดงผลบนหน้าจอมือถือ (Responsive) */
-        @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column; 
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                border-right: none;
-                border-bottom: 1px solid #e2e8f0;
-                padding: 20px;
-            }
+    /* Arrow */
+    .card-arrow {
+        width: 28px; height: 28px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.75rem; color: var(--text-muted); transition: all 0.2s;
+    }
+    .card:hover .card-arrow { background: var(--text); border-color: var(--text); color: var(--surface); }
 
-            .main-content {
-                padding: 20px;
-            }
-        }
+    /* Pinned clone border */
+    .card.pinned-clone { border: 1.5px solid rgba(212,168,67,0.35); }
+    .card.pinned-clone:hover { border-color: var(--gold); }
+
+    /* Category color sets */
+    .c-dashboard .card-top-bar { background: var(--c-dashboard); }
+    .c-dashboard .card-type-badge { background: #eef2ff; color: var(--c-dashboard); }
+    .c-contact   .card-top-bar { background: var(--c-contact); }
+    .c-contact   .card-type-badge { background: #ecfdf5; color: var(--c-contact); }
+    .c-recruit   .card-top-bar { background: var(--c-recruit); }
+    .c-recruit   .card-type-badge { background: #fffbeb; color: #b45309; }
+    .c-doc       .card-top-bar { background: var(--c-doc); }
+    .c-doc       .card-type-badge { background: #eff6ff; color: var(--c-doc); }
+    .c-training  .card-top-bar { background: var(--c-training); }
+    .c-training  .card-type-badge { background: #faf5ff; color: var(--c-training); }
+    .c-stock     .card-top-bar { background: var(--c-stock); }
+    .c-stock     .card-type-badge { background: #fef2f2; color: var(--c-stock); }
+    .c-retail    .card-top-bar { background: var(--c-retail); }
+    .c-retail    .card-type-badge { background: #fdf2f8; color: var(--c-retail); }
+
+    [data-theme="dark"] .c-dashboard .card-type-badge { background: rgba(99,102,241,0.15); }
+    [data-theme="dark"] .c-contact   .card-type-badge { background: rgba(16,185,129,0.15); }
+    [data-theme="dark"] .c-recruit   .card-type-badge { background: rgba(245,158,11,0.15); }
+    [data-theme="dark"] .c-doc       .card-type-badge { background: rgba(59,130,246,0.15); }
+    [data-theme="dark"] .c-training  .card-type-badge { background: rgba(168,85,247,0.15); }
+    [data-theme="dark"] .c-stock     .card-type-badge { background: rgba(239,68,68,0.15); }
+    [data-theme="dark"] .c-retail    .card-type-badge { background: rgba(236,72,153,0.15); }
+
+    .cat-icon-wrap.c-dashboard { background: #eef2ff; }
+    .cat-icon-wrap.c-contact   { background: #ecfdf5; }
+    .cat-icon-wrap.c-recruit   { background: #fffbeb; }
+    .cat-icon-wrap.c-doc       { background: #eff6ff; }
+    .cat-icon-wrap.c-training  { background: #faf5ff; }
+    .cat-icon-wrap.c-stock     { background: #fef2f2; }
+    .cat-icon-wrap.c-retail    { background: #fdf2f8; }
+    [data-theme="dark"] .cat-icon-wrap.c-dashboard { background: rgba(99,102,241,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-contact   { background: rgba(16,185,129,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-recruit   { background: rgba(245,158,11,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-doc       { background: rgba(59,130,246,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-training  { background: rgba(168,85,247,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-stock     { background: rgba(239,68,68,0.15); }
+    [data-theme="dark"] .cat-icon-wrap.c-retail    { background: rgba(236,72,153,0.15); }
+
+    .nav-dot.c-dashboard { background: var(--c-dashboard); }
+    .nav-dot.c-contact   { background: var(--c-contact); }
+    .nav-dot.c-recruit   { background: var(--c-recruit); }
+    .nav-dot.c-doc       { background: var(--c-doc); }
+    .nav-dot.c-training  { background: var(--c-training); }
+    .nav-dot.c-stock     { background: var(--c-stock); }
+    .nav-dot.c-retail    { background: var(--c-retail); }
+
+    /* Toast */
+    #toast {
+        position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+        background: var(--navy); color: #fff; padding: 10px 22px;
+        border-radius: 50px; font-size: 0.82rem; z-index: 999;
+        transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        border: 1px solid rgba(255,255,255,0.1); white-space: nowrap; pointer-events: none;
+    }
+    [data-theme="dark"] #toast { background: #e6edf3; color: #0d1117; }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    .hidden { display: none !important; }
+
+    /* Mobile overlay */
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 79; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 768px) {
+        .sidebar { position: fixed; left: -290px; top: 0; height: 100vh; z-index: 100; transition: left 0.3s ease; }
+        .sidebar.open { left: 0; }
+        .sidebar-overlay.open { display: block; }
+        .hamburger { display: flex; }
+        .content { padding: 18px 16px 50px; }
+        .topbar { padding: 11px 16px; }
+        .stats-row { gap: 10px; margin-bottom: 20px; }
+    }
+    @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .category  { animation: fadeUp 0.45s ease both; }
+    .category:nth-child(1) { animation-delay: 0.05s; }
+    .category:nth-child(2) { animation-delay: 0.10s; }
+    .category:nth-child(3) { animation-delay: 0.15s; }
+    .category:nth-child(4) { animation-delay: 0.20s; }
+    .category:nth-child(5) { animation-delay: 0.25s; }
+    .category:nth-child(6) { animation-delay: 0.30s; }
+    .category:nth-child(7) { animation-delay: 0.35s; }
+    .stat-card { animation: fadeUp 0.4s ease both; }
+    .stat-card:nth-child(1) { animation-delay: 0.00s; }
+    .stat-card:nth-child(2) { animation-delay: 0.05s; }
+    .stat-card:nth-child(3) { animation-delay: 0.10s; }
+    .stat-card:nth-child(4) { animation-delay: 0.15s; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    
-    <aside class="sidebar">
-        <img src="https://i.postimg.cc/MK6g9SWJ/logo.png" alt="9 Singha Broker Logo" class="company-logo">
-        <h2>9 Singha Broker</h2>
-        
-        <ul class="nav-menu">
-            <li><a href="#cat-dashboard">📊 แดชบอร์ดและรายงาน</a></li>
-            <li><a href="#cat-contacts">📞 ข้อมูลติดต่อภายใน</a></li>
-            <li><a href="#cat-recruitment">👥 การสรรหาบุคลากร</a></li>
-            <li><a href="#cat-doc-management">🗂️ ระบบจัดการเอกสารพนักงาน</a></li>
-            <li><a href="#cat-training">🎓 ระบบงานฝึกอบรม</a></li>
-            <li><a href="#cat-stock">📦 เบิกจ่ายและสวัสดิการ</a></li>
-            <li><a href="#cat-retail">🛍️ สินค้าและโปรโมชั่น</a></li>
-        </ul>
+<div id="toast"></div>
+
+<div class="layout">
+
+    <!-- ══ SIDEBAR ══ -->
+    <div class="sidebar-overlay" id="overlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo-wrap">
+                <img src="https://i.postimg.cc/MK6g9SWJ/logo.png" alt="9 Singha Broker Logo">
+            </div>
+            <div class="brand-name">9 Singha Broker</div>
+            <div class="brand-sub">HR Portal</div>
+        </div>
+
+        <div class="sidebar-search">
+            <div class="sidebar-search-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="ค้นหารายการ...">
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <div class="nav-label">เมนูหลัก</div>
+            <ul class="nav-menu">
+                <li><a href="#pinned"            class="nav-link" id="nav-pinned" style="display:none"><span style="font-size:0.85rem">⭐</span>รายการปักหมุด<span class="nav-count" id="nav-pin-count">0</span></a></li>
+                <li><a href="#cat-dashboard"      class="nav-link"><span class="nav-dot c-dashboard"></span>แดชบอร์ดและรายงาน<span class="nav-count">2</span></a></li>
+                <li><a href="#cat-contacts"       class="nav-link"><span class="nav-dot c-contact"></span>ข้อมูลติดต่อภายใน<span class="nav-count">1</span></a></li>
+                <li><a href="#cat-recruitment"    class="nav-link"><span class="nav-dot c-recruit"></span>การสรรหาบุคลากร<span class="nav-count">3</span></a></li>
+                <li><a href="#cat-doc-management" class="nav-link"><span class="nav-dot c-doc"></span>ระบบจัดการเอกสาร<span class="nav-count">4</span></a></li>
+                <li><a href="#cat-training"       class="nav-link"><span class="nav-dot c-training"></span>ระบบงานฝึกอบรม<span class="nav-count">3</span></a></li>
+                <li><a href="#cat-stock"          class="nav-link"><span class="nav-dot c-stock"></span>เบิกจ่ายและสวัสดิการ<span class="nav-count">6</span></a></li>
+                <li><a href="#cat-retail"         class="nav-link"><span class="nav-dot c-retail"></span>สินค้าและโปรโมชั่น<span class="nav-count">2</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>© 2568 9 Singha Broker Co., Ltd.<br>ระบบภายในสำหรับทีม HR เท่านั้น</p>
+        </div>
     </aside>
 
-    <main class="main-content">
-        <header>
-            <h1>HR Link Portal</h1>
-            <p>ศูนย์รวมลิงก์ ไฟล์งาน และเอกสารสำคัญสำหรับทีม HR</p>
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 ค้นหารายการ เช่น เอกสารพนักงาน, แฟ้มประวัติ, ยูนิฟอร์ม...">
-        </header>
-
-        <div id="noResults" class="no-results">ไม่พบรายการที่คุณค้นหา กรุณาลองใช้คำอื่นครับ</div>
-
-        <section class="category" id="cat-dashboard">
-            <h2 class="category-title">📊 แดชบอร์ดและรายงาน (Dashboards)</h2>
-            <div class="grid-container">
-                <a href="https://script.google.com/macros/s/AKfycbw40kB3D10guKXtjEMrjQzNRY-tpDoMue_l-IxQ-kKvObt_-WuM2DI2Q3kitvamLDV-vg/exec" target="_blank" class="card">
-                    <h3 class="card-title">สรุปรายงาน รายชื่อพนักงานที่ออกทั้งหมด</h3>
-                    <p class="card-desc">หน้าแดชบอร์ดสรุปข้อมูลและแสดงรายชื่อพนักงานที่พ้นสภาพหรือลาออกทั้งหมด</p>
-                </a>
-
-                <a href="https://ktrp87br89-dot.github.io/9singDashBoardregisViewtraning/" target="_blank" class="card">
-                    <h3 class="card-title">สรุปผลการเข้าอบรมพนักงานใหม่</h3>
-                    <p class="card-desc">Live Dashboard แสดงข้อมูลสถิติและภาพรวมการเข้ารับการฝึกอบรมแบบเรียลไทม์</p>
-                </a>
+    <!-- ══ MAIN ══ -->
+    <div class="main">
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="hamburger" id="hamburger">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <div>
+                    <div class="topbar-title">HR Link Portal</div>
+                    <div class="topbar-sub">ศูนย์รวมเครื่องมือสำหรับทีม HR</div>
+                </div>
             </div>
-        </section>
-
-        <section class="category" id="cat-contacts">
-            <h2 class="category-title">📞 ข้อมูลติดต่อ (Contacts & Directory)</h2>
-            <div class="grid-container">
-                <a href="https://ktrp87br89-dot.github.io/phonelist/" target="_blank" class="card">
-                    <h3 class="card-title">รายชื่อผู้ติดต่อภายใน 9 Singha Broker</h3>
-                    <p class="card-desc">สมุดโทรศัพท์ ช่องทางการติดต่อ และรายชื่อพนักงานภายในองค์กร</p>
-                </a>
+            <div class="topbar-right">
+                <span class="badge-pill badge-hr">🔒 HR Only</span>
+                <span class="date-pill" id="datePill">—</span>
+                <button class="theme-toggle" id="themeToggle" title="เปลี่ยน Theme">🌙</button>
             </div>
-        </section>
+        </div>
 
-        <section class="category" id="cat-recruitment">
-            <h2 class="category-title">👥 การสรรหาบุคลากร (Recruitment)</h2>
-            <div class="grid-container">
-                <a href="https://script.google.com/macros/s/AKfycbyDK-rKCNjSSkY5SHMxNfCpEhqZ2KrnEUT9Ka5CFQNvsFSIpPn-7dDKCz64yklLTzokgQ/exec" target="_blank" class="card">
-                    <h3 class="card-title">รายงานการสรรหา (Recruitment Dashboard)</h3>
-                    <p class="card-desc">หน้าแดชบอร์ดสรุปข้อมูล สถิติ และภาพรวมของกระบวนการสรรหาบุคลากร</p>
-                </a>
+        <div class="content">
 
-                <a href="https://docs.google.com/spreadsheets/d/1ZYitl3DVr1YEpABjMuMAuKcJVOMC0xa1goHJGZ7AGT8/edit?gid=0#gid=0" target="_blank" class="card">
-                    <h3 class="card-title">ฐานข้อมูลรายงานการสรรหา</h3>
-                    <p class="card-desc">Google Sheet ฐานข้อมูลหลักที่เชื่อมต่อกับ Recruitment Dashboard เพื่ออัปเดตและจัดการข้อมูล</p>
-                </a>
-                
-                <a href="https://ktrp87br89-dot.github.io/JOB_update/" target="_blank" class="card">
-                    <h3 class="card-title">UPDATE !! ผู้สมัครงาน</h3>
-                    <p class="card-desc">เว็บไซต์สำหรับติดตามและอัปเดตสถานะผู้สมัครงานของ บริษัท ๙ สิงห์โบรกเกอร์ จำกัด</p>
-                </a>
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#eef2ff">📊</div>
+                    <div class="stat-info"><div class="num">7</div><div class="lbl">หมวดหมู่</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#ecfdf5">🔗</div>
+                    <div class="stat-info"><div class="num">21</div><div class="lbl">ลิงก์ทั้งหมด</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#fffbeb">⭐</div>
+                    <div class="stat-info"><div class="num" id="favCount">0</div><div class="lbl">รายการปักหมุด</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#faf5ff">🌐</div>
+                    <div class="stat-info"><div class="num">10</div><div class="lbl">เว็บแอป</div></div>
+                </div>
             </div>
-        </section>
 
-        <section class="category" id="cat-doc-management">
-            <h2 class="category-title">🗂️ ระบบจัดการเอกสารพนักงาน (Document Management)</h2>
-            <div class="grid-container">
-                <a href="https://script.google.com/macros/s/AKfycbyHE-JznLzJNyOWYY8JG7Npf9_TTvyIXdovoacRu_nVQcj946P0KCCg2RDE42CyiiYV/exec" target="_blank" class="card">
-                    <h3 class="card-title">🔍 ค้นหาเอกสารพนักงาน</h3>
-                    <p class="card-desc">ระบบสำหรับค้นหาและเรียกดูแฟ้มประวัติ เอกสารสำคัญของพนักงานได้อย่างรวดเร็ว</p>
-                </a>
-
-                <a href="https://script.google.com/macros/s/AKfycbyHE-JznLzJNyOWYY8JG7Npf9_TTvyIXdovoacRu_nVQcj946P0KCCg2RDE42CyiiYV/exec?page=admin" target="_blank" class="card">
-                    <h3 class="card-title">⚙️ ระบบ Admin จัดการเอกสาร</h3>
-                    <p class="card-desc">พื้นที่สำหรับ HR (ผู้ดูแลระบบ) เพื่ออัปโหลด แก้ไข และจัดการสิทธิ์เข้าถึงไฟล์เอกสาร</p>
-                </a>
-
-                <a href="https://docs.google.com/spreadsheets/d/193AIqUnBjAhwrfP4aD5vEH0oc7E3TkOTXFU28GudK5w/edit?usp=sharing" target="_blank" class="card">
-                    <h3 class="card-title">📝 ฐานข้อมูลระบบจัดการเอกสาร</h3>
-                    <p class="card-desc">Google Sheet บันทึกข้อมูลและดัชนีของแฟ้มเอกสารพนักงานทั้งหมดในระบบ</p>
-                </a>
-
-                <a href="https://drive.google.com/drive/folders/1gSXt6WYOipDqaZaaK8l0tiudLllYqwlN?usp=sharing" target="_blank" class="card">
-                    <h3 class="card-title">☁️ Google Drive เก็บเอกสาร</h3>
-                    <p class="card-desc">คลังเก็บไฟล์เอกสารตัวจริง (PDF, รูปภาพ) ของพนักงานทั้งหมด แยกตามโฟลเดอร์</p>
-                </a>
+            <!-- Pinned section -->
+            <div id="pinnedSection">
+                <div class="pinned-header" id="pinned">
+                    <span>⭐</span>
+                    <span class="pinned-title">รายการที่ปักหมุดไว้</span>
+                    <span class="pinned-count" id="pinnedCount">0 รายการ</span>
+                </div>
+                <div id="pinnedGrid"></div>
             </div>
-        </section>
 
-        <section class="category" id="cat-training">
-            <h2 class="category-title">🎓 ระบบงานฝึกอบรม (Training & Onboarding)</h2>
-            <div class="grid-container">
-                <a href="https://ktrp87br89-dot.github.io/9sing-regis-traning-website/" target="_blank" class="card">
-                    <h3 class="card-title">ลงทะเบียนอบรมพนักงานใหม่</h3>
-                    <p class="card-desc">เว็บไซต์สำหรับให้พนักงานใหม่ลงทะเบียนเข้ารับการปฐมนิเทศและการฝึกอบรม</p>
-                </a>
-
-                <a href="https://docs.google.com/spreadsheets/d/1nTPFHUMuria-67iCnAr0wWa9DKJQjrCXX0nvKMfBd6I/edit?gid=0&pli=1&authuser=0#gid=0" target="_blank" class="card">
-                    <h3 class="card-title">HR Training System</h3>
-                    <p class="card-desc">Google Sheet ฐานข้อมูลหลักสำหรับจัดการข้อมูลและสรุปผลการฝึกอบรมทั้งหมด</p>
-                </a>
-                
-                <a href="https://docs.google.com/spreadsheets/d/1EQ5iRDUjyoxJ-tB1niK2LhO0GqLDqI20R4S8DO7ibiE/edit?gid=1857683467#gid=1857683467" target="_blank" class="card">
-                    <h3 class="card-title">ใบเซ็นต์ชื่ออบรม ประจำเดือน 2569</h3>
-                    <p class="card-desc">ไฟล์ตารางบันทึกการเข้าร่วมและใบเซ็นชื่อเข้าอบรมของพนักงานในแต่ละเดือน</p>
-                </a>
+            <!-- No results -->
+            <div id="noResults" class="no-results">
+                <div class="icon">🔍</div>
+                <p>ไม่พบรายการที่ค้นหา กรุณาลองใช้คำอื่น</p>
             </div>
-        </section>
 
-        <section class="category" id="cat-stock">
-            <h2 class="category-title">📦 เบิกจ่ายและสวัสดิการ (Stock & Welfare)</h2>
-            <div class="grid-container">
-                <a href="https://ktrp87br89-dot.github.io/e-Uniform/" target="_blank" class="card">
-                    <h3 class="card-title">ระบบเบิกซื้อเสื้อบริษัท (e-Uniform)</h3>
-                    <p class="card-desc">เว็บไซต์สำหรับให้พนักงานทำรายการสั่งซื้อและเบิกเสื้อยูนิฟอร์มของบริษัท</p>
-                </a>
-                <a href="https://docs.google.com/spreadsheets/d/1cNKhV4CmmJ5yCowQads81lucmtvWlo3FblUGKJlbexk/edit?gid=1952415982#gid=1952415982" target="_blank" class="card">
-                    <h3 class="card-title">ฐานข้อมูลระบบเบิกซื้อเสื้อ (e-Uniform)</h3>
-                    <p class="card-desc">Google Sheet สรุปข้อมูลการสั่งซื้อ ไซส์เสื้อ และอัปเดตสถานะการจัดส่งยูนิฟอร์ม</p>
-                </a>
+            <!-- ════ DASHBOARD ════ -->
+            <section class="category" id="cat-dashboard">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-dashboard">📊</div>
+                    <div class="cat-title">แดชบอร์ดและรายงาน</div>
+                    <span class="cat-badge">2 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://script.google.com/macros/s/AKfycbw40kB3D10guKXtjEMrjQzNRY-tpDoMue_l-IxQ-kKvObt_-WuM2DI2Q3kitvamLDV-vg/exec"
+                       target="_blank" class="card c-dashboard" data-id="db1">
+                        <div class="card-ribbon ribbon-updated">อัปเดต</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📊 Dashboard</span>
+                            <div class="card-title">สรุปรายงาน รายชื่อพนักงานที่ออกทั้งหมด</div>
+                            <div class="card-desc">แดชบอร์ดสรุปข้อมูลและแสดงรายชื่อพนักงานที่พ้นสภาพหรือลาออก</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 Apps Script</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="db1" onclick="toggleFav(event,'db1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://ktrp87br89-dot.github.io/9singDashBoardregisViewtraning/"
+                       target="_blank" class="card c-dashboard" data-id="db2">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📡 Live Dashboard</span>
+                            <div class="card-title">สรุปผลการเข้าอบรมพนักงานใหม่</div>
+                            <div class="card-desc">Live Dashboard แสดงสถิติและภาพรวมการเข้าฝึกอบรมแบบเรียลไทม์</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="db2" onclick="toggleFav(event,'db2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-                <a href="https://ktrp87br89-dot.github.io/Drinking-water/" target="_blank" class="card">
-                    <h3 class="card-title">ระบบเบิกน้ำดื่ม</h3>
-                    <p class="card-desc">เว็บไซต์สำหรับทำรายการเบิกน้ำดื่มประจำวันสำหรับพนักงาน</p>
-                </a>
-                <a href="https://docs.google.com/spreadsheets/d/1UoXeRabRrSre7yuR4CU4o8FFbm4FmBWM-3bews6U2Q8/edit?gid=0#gid=0" target="_blank" class="card">
-                    <h3 class="card-title">ฐานข้อมูลสต็อกน้ำดื่ม</h3>
-                    <p class="card-desc">Google Sheet สรุปรายการเบิกจ่ายและจัดการสต็อกน้ำดื่มคงเหลือ</p>
-                </a>
-                
-                <a href="https://ktrp87br89-dot.github.io/e-pharmacy/" target="_blank" class="card">
-                    <h3 class="card-title">ระบบเบิกยา (e-Pharmacy)</h3>
-                    <p class="card-desc">เว็บไซต์สำหรับทำรายการเบิกยาสามัญประจำบ้านสำหรับพนักงาน</p>
-                </a>
-                <a href="https://docs.google.com/spreadsheets/d/1HPfE9rlFcYZnYd_Y9ZYnrzqIlt1A61aYVf6PK4ZAcGI/edit?resourcekey=&gid=236272392#gid=236272392" target="_blank" class="card">
-                    <h3 class="card-title">ฐานข้อมูลสต็อกยา</h3>
-                    <p class="card-desc">Google Sheet สรุปรายการเบิกจ่ายและจัดการสต็อกยาสามัญประจำบริษัท</p>
-                </a>
-            </div>
-        </section>
+            <!-- ════ CONTACTS ════ -->
+            <section class="category" id="cat-contacts">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-contact">📞</div>
+                    <div class="cat-title">ข้อมูลติดต่อ (Contacts & Directory)</div>
+                    <span class="cat-badge">1 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://ktrp87br89-dot.github.io/phonelist/"
+                       target="_blank" class="card c-contact" data-id="ct1">
+                        <div class="card-ribbon ribbon-new">ใหม่</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📒 Directory</span>
+                            <div class="card-title">รายชื่อผู้ติดต่อภายใน 9 Singha Broker</div>
+                            <div class="card-desc">สมุดโทรศัพท์ ช่องทางการติดต่อ และรายชื่อพนักงานภายในองค์กร</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="ct1" onclick="toggleFav(event,'ct1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-        <section class="category" id="cat-retail">
-            <h2 class="category-title">🛍️ สินค้าและโปรโมชั่น (Retail & Promotions)</h2>
-            <div class="grid-container">
-                <a href="https://ktrp87br89-dot.github.io/Retail-online/" target="_blank" class="card">
-                    <h3 class="card-title">หน้าเว็ปสินค้าและโปรโมชั่น RETAIL</h3>
-                    <p class="card-desc">เว็บไซต์หลักสำหรับแสดงรายการสินค้า โปรโมชั่น และข้อมูลหน้าร้าน (Retail)</p>
-                </a>
+            <!-- ════ RECRUITMENT ════ -->
+            <section class="category" id="cat-recruitment">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-recruit">👥</div>
+                    <div class="cat-title">การสรรหาบุคลากร (Recruitment)</div>
+                    <span class="cat-badge">3 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://script.google.com/macros/s/AKfycbyDK-rKCNjSSkY5SHMxNfCpEhqZ2KrnEUT9Ka5CFQNvsFSIpPn-7dDKCz64yklLTzokgQ/exec"
+                       target="_blank" class="card c-recruit" data-id="rc1">
+                        <div class="card-ribbon ribbon-updated">อัปเดต</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📊 Dashboard</span>
+                            <div class="card-title">รายงานการสรรหา (Recruitment Dashboard)</div>
+                            <div class="card-desc">แดชบอร์ดสรุปข้อมูล สถิติ และภาพรวมของกระบวนการสรรหา</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 Apps Script</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="rc1" onclick="toggleFav(event,'rc1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1ZYitl3DVr1YEpABjMuMAuKcJVOMC0xa1goHJGZ7AGT8/edit?gid=0"
+                       target="_blank" class="card c-recruit" data-id="rc2">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ฐานข้อมูลรายงานการสรรหา</div>
+                            <div class="card-desc">Google Sheet เชื่อมต่อกับ Recruitment Dashboard</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="rc2" onclick="toggleFav(event,'rc2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://ktrp87br89-dot.github.io/JOB_update/"
+                       target="_blank" class="card c-recruit" data-id="rc3">
+                        <div class="card-ribbon ribbon-new">ใหม่</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">🔄 อัปเดต</span>
+                            <div class="card-title">UPDATE !! ผู้สมัครงาน</div>
+                            <div class="card-desc">ติดตามและอัปเดตสถานะผู้สมัครงาน บริษัท ๙ สิงห์โบรกเกอร์</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="rc3" onclick="toggleFav(event,'rc3')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-                <a href="https://docs.google.com/spreadsheets/d/1Yi4fbWu8e0BRnTlXtRkCcp_3d6YeWpHnIpXWU4DLROY/edit?gid=2068798226#gid=2068798226" target="_blank" class="card">
-                    <h3 class="card-title">ดาต้า Promo_Database</h3>
-                    <p class="card-desc">ฐานข้อมูล Google Sheet รวบรวมข้อมูลโปรโมชั่นและแคมเปญต่างๆ</p>
-                </a>
-            </div>
-        </section>
-    </main>
-</div>
+            <!-- ════ DOCUMENTS ════ -->
+            <section class="category" id="cat-doc-management">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-doc">🗂️</div>
+                    <div class="cat-title">ระบบจัดการเอกสารพนักงาน</div>
+                    <span class="cat-badge">4 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://script.google.com/macros/s/AKfycbyHE-JznLzJNyOWYY8JG7Npf9_TTvyIXdovoacRu_nVQcj946P0KCCg2RDE42CyiiYV/exec"
+                       target="_blank" class="card c-doc" data-id="dc1">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">🔍 ค้นหา</span>
+                            <div class="card-title">ค้นหาเอกสารพนักงาน</div>
+                            <div class="card-desc">ค้นหาและเรียกดูแฟ้มประวัติ เอกสารสำคัญได้อย่างรวดเร็ว</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 Apps Script</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="dc1" onclick="toggleFav(event,'dc1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://script.google.com/macros/s/AKfycbyHE-JznLzJNyOWYY8JG7Npf9_TTvyIXdovoacRu_nVQcj946P0KCCg2RDE42CyiiYV/exec?page=admin"
+                       target="_blank" class="card c-doc" data-id="dc2">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">⚙️ Admin</span>
+                            <div class="card-title">ระบบ Admin จัดการเอกสาร</div>
+                            <div class="card-desc">อัปโหลด แก้ไข และจัดการสิทธิ์เข้าถึงไฟล์เอกสาร</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 Apps Script</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="dc2" onclick="toggleFav(event,'dc2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/193AIqUnBjAhwrfP4aD5vEH0oc7E3TkOTXFU28GudK5w/edit?usp=sharing"
+                       target="_blank" class="card c-doc" data-id="dc3">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ฐานข้อมูลระบบจัดการเอกสาร</div>
+                            <div class="card-desc">บันทึกข้อมูลและดัชนีของแฟ้มเอกสารพนักงานทั้งหมด</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="dc3" onclick="toggleFav(event,'dc3')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1gSXt6WYOipDqaZaaK8l0tiudLllYqwlN?usp=sharing"
+                       target="_blank" class="card c-doc" data-id="dc4">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">☁️ Drive</span>
+                            <div class="card-title">Google Drive เก็บเอกสาร</div>
+                            <div class="card-desc">คลังเก็บไฟล์เอกสาร PDF, รูปภาพ แยกตามโฟลเดอร์</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">☁️ Google Drive</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="dc4" onclick="toggleFav(event,'dc4')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ════ TRAINING ════ -->
+            <section class="category" id="cat-training">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-training">🎓</div>
+                    <div class="cat-title">ระบบงานฝึกอบรม (Training & Onboarding)</div>
+                    <span class="cat-badge">3 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://ktrp87br89-dot.github.io/9sing-regis-traning-website/"
+                       target="_blank" class="card c-training" data-id="tr1">
+                        <div class="card-ribbon ribbon-new">ใหม่</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">✍️ ลงทะเบียน</span>
+                            <div class="card-title">ลงทะเบียนอบรมพนักงานใหม่</div>
+                            <div class="card-desc">พนักงานใหม่ลงทะเบียนเข้ารับการปฐมนิเทศและการฝึกอบรม</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="tr1" onclick="toggleFav(event,'tr1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1nTPFHUMuria-67iCnAr0wWa9DKJQjrCXX0nvKMfBd6I/edit?gid=0"
+                       target="_blank" class="card c-training" data-id="tr2">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">HR Training System</div>
+                            <div class="card-desc">ฐานข้อมูลหลักสำหรับจัดการและสรุปผลการฝึกอบรม</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="tr2" onclick="toggleFav(event,'tr2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1EQ5iRDUjyoxJ-tB1niK2LhO0GqLDqI20R4S8DO7ibiE/edit?gid=1857683467"
+                       target="_blank" class="card c-training" data-id="tr3">
+                        <div class="card-ribbon ribbon-updated">อัปเดต</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ใบเซ็นต์ชื่ออบรม ประจำเดือน 2569</div>
+                            <div class="card-desc">บันทึกการเข้าร่วมและใบเซ็นชื่อเข้าอบรมในแต่ละเดือน</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="tr3" onclick="toggleFav(event,'tr3')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ════ STOCK / WELFARE ════ -->
+            <section class="category" id="cat-stock">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-stock">📦</div>
+                    <div class="cat-title">เบิกจ่ายและสวัสดิการ (Stock & Welfare)</div>
+                    <span class="cat-badge">6 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://ktrp87br89-dot.github.io/e-Uniform/" target="_blank" class="card c-stock" data-id="sk1">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">👕 e-Uniform</span>
+                            <div class="card-title">ระบบเบิกซื้อเสื้อบริษัท (e-Uniform)</div>
+                            <div class="card-desc">สั่งซื้อและเบิกเสื้อยูนิฟอร์มของบริษัท</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk1" onclick="toggleFav(event,'sk1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1cNKhV4CmmJ5yCowQads81lucmtvWlo3FblUGKJlbexk/edit?gid=1952415982" target="_blank" class="card c-stock" data-id="sk2">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ฐานข้อมูลระบบเบิกซื้อเสื้อ</div>
+                            <div class="card-desc">สรุปการสั่งซื้อ ไซส์เสื้อ และสถานะการจัดส่ง</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk2" onclick="toggleFav(event,'sk2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://ktrp87br89-dot.github.io/Drinking-water/" target="_blank" class="card c-stock" data-id="sk3">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">💧 สวัสดิการ</span>
+                            <div class="card-title">ระบบเบิกน้ำดื่ม</div>
+                            <div class="card-desc">ทำรายการเบิกน้ำดื่มประจำวันสำหรับพนักงาน</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk3" onclick="toggleFav(event,'sk3')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1UoXeRabRrSre7yuR4CU4o8FFbm4FmBWM-3bews6U2Q8/edit?gid=0" target="_blank" class="card c-stock" data-id="sk4">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ฐานข้อมูลสต็อกน้ำดื่ม</div>
+                            <div class="card-desc">สรุปเบิกจ่ายและจัดการสต็อกน้ำดื่มคงเหลือ</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk4" onclick="toggleFav(event,'sk4')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://ktrp87br89-dot.github.io/e-pharmacy/" target="_blank" class="card c-stock" data-id="sk5">
+                        <div class="card-ribbon ribbon-new">ใหม่</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">💊 e-Pharmacy</span>
+                            <div class="card-title">ระบบเบิกยา (e-Pharmacy)</div>
+                            <div class="card-desc">ทำรายการเบิกยาสามัญประจำบ้านสำหรับพนักงาน</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk5" onclick="toggleFav(event,'sk5')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1HPfE9rlFcYZnYd_Y9ZYnrzqIlt1A61aYVf6PK4ZAcGI/edit?gid=236272392" target="_blank" class="card c-stock" data-id="sk6">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ฐานข้อมูลสต็อกยา</div>
+                            <div class="card-desc">สรุปเบิกจ่ายและจัดการสต็อกยาสามัญประจำบริษัท</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="sk6" onclick="toggleFav(event,'sk6')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ════ RETAIL ════ -->
+            <section class="category" id="cat-retail">
+                <div class="cat-header">
+                    <div class="cat-icon-wrap c-retail">🛍️</div>
+                    <div class="cat-title">สินค้าและโปรโมชั่น (Retail & Promotions)</div>
+                    <span class="cat-badge">2 รายการ</span>
+                </div>
+                <div class="grid">
+                    <a href="https://ktrp87br89-dot.github.io/Retail-online/" target="_blank" class="card c-retail" data-id="rt1">
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">🛍️ Retail</span>
+                            <div class="card-title">หน้าเว็บสินค้าและโปรโมชั่น RETAIL</div>
+                            <div class="card-desc">แสดงรายการสินค้า โปรโมชั่น และข้อมูลหน้าร้าน</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">🌐 GitHub Pages</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="rt1" onclick="toggleFav(event,'rt1')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1Yi4fbWu8e0BRnTlXtRkCcp_3d6YeWpHnIpXWU4DLROY/edit?gid=2068798226" target="_blank" class="card c-retail" data-id="rt2">
+                        <div class="card-ribbon ribbon-updated">อัปเดต</div>
+                        <div class="card-top-bar"></div>
+                        <div class="card-body">
+                            <span class="card-type-badge">📋 Google Sheet</span>
+                            <div class="card-title">ดาต้า Promo_Database</div>
+                            <div class="card-desc">ฐานข้อมูลรวบรวมข้อมูลโปรโมชั่นและแคมเปญต่างๆ</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-link-hint">📋 Sheets</span>
+                            <div class="card-actions">
+                                <button class="fav-btn" data-id="rt2" onclick="toggleFav(event,'rt2')" title="ปักหมุด">☆</button>
+                                <span class="card-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+</div><!-- /layout -->
 
 <script>
-    // สคริปต์สำหรับระบบค้นหา
-    document.getElementById('searchInput').addEventListener('input', function() {
-        let filter = this.value.toLowerCase(); 
-        let cards = document.querySelectorAll('.card'); 
-        let categories = document.querySelectorAll('.category'); 
-        let hasVisibleCards = false;
+const STORAGE_KEY = 'hrportal_favs_v3';
+let favorites = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
-        cards.forEach(function(card) {
-            let title = card.querySelector('.card-title').innerText.toLowerCase();
-            let desc = card.querySelector('.card-desc').innerText.toLowerCase();
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+    // Date
+    document.getElementById('datePill').textContent =
+        new Date().toLocaleDateString('th-TH', { year:'numeric', month:'long', day:'numeric' });
 
-            if (title.includes(filter) || desc.includes(filter)) {
-                card.classList.remove('hidden');
-                hasVisibleCards = true;
-            } else {
-                card.classList.add('hidden'); 
-            }
-        });
-
-        categories.forEach(function(category) {
-            let visibleCardsInCategory = category.querySelectorAll('.card:not(.hidden)').length;
-            if (visibleCardsInCategory === 0) {
-                category.style.display = 'none';
-            } else {
-                category.style.display = 'block';
-            }
-        });
-
-        let noResultsMsg = document.getElementById('noResults');
-        if (!hasVisibleCards && filter !== "") {
-            noResultsMsg.style.display = 'block';
-        } else {
-            noResultsMsg.style.display = 'none';
-        }
+    // Theme
+    const saved = localStorage.getItem('hrportal_theme') || 'light';
+    applyTheme(saved);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        localStorage.setItem('hrportal_theme', next);
     });
-</script>
 
+    // Mobile sidebar
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('overlay').classList.add('open');
+    });
+    document.getElementById('overlay').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('open');
+    });
+    document.querySelectorAll('.nav-link').forEach(a =>
+        a.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('overlay').classList.remove('open');
+            }
+        })
+    );
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', function() {
+        doSearch(this.value.toLowerCase().trim());
+    });
+
+    // Render favorites on load
+    renderFavorites();
+    initScrollSpy();
+});
+
+/* ── THEME ── */
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+/* ── FAVORITES ── */
+function toggleFav(e, id) {
+    e.preventDefault(); e.stopPropagation();
+    const idx = favorites.indexOf(id);
+    const isAdding = idx === -1;
+    if (isAdding) {
+        favorites.push(id);
+        showToast('⭐ ปักหมุดแล้ว');
+    } else {
+        favorites.splice(idx, 1);
+        showToast('✖ ยกเลิกการปักหมุดแล้ว');
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+    renderFavorites();
+    if (isAdding) {
+        setTimeout(() => {
+            const el = document.getElementById('pinnedSection');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+    }
+}
+
+function renderFavorites() {
+    // Update all fav buttons
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+        const id = btn.dataset.id;
+        const isPinned = favorites.includes(id);
+        btn.textContent = isPinned ? '★' : '☆';
+        btn.classList.toggle('pinned', isPinned);
+        btn.title = isPinned ? 'ยกเลิกปักหมุด' : 'ปักหมุด';
+    });
+
+    // Update stats
+    document.getElementById('favCount').textContent = favorites.length;
+
+    const grid    = document.getElementById('pinnedGrid');
+    const section = document.getElementById('pinnedSection');
+    const navPin  = document.getElementById('nav-pinned');
+
+    grid.innerHTML = '';
+
+    if (favorites.length === 0) {
+        section.style.display = 'none';
+        navPin.style.display  = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    navPin.style.display  = 'flex';
+    document.getElementById('pinnedCount').textContent  = favorites.length + ' รายการ';
+    document.getElementById('nav-pin-count').textContent = favorites.length;
+
+    favorites.forEach(id => {
+        const orig = document.querySelector(`.card[data-id="${id}"]`);
+        if (!orig) return;
+        const clone = orig.cloneNode(true);
+        clone.classList.add('pinned-clone');
+        const fb = clone.querySelector('.fav-btn');
+        if (fb) fb.addEventListener('click', e => toggleFav(e, id));
+        grid.appendChild(clone);
+    });
+}
+
+/* ── SEARCH ── */
+function doSearch(filter) {
+    const cards = document.querySelectorAll('.category .card');
+    const cats  = document.querySelectorAll('.category');
+    let hasVisible = false;
+
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
+        const desc  = card.querySelector('.card-desc')?.innerText.toLowerCase()  || '';
+        const badge = card.querySelector('.card-type-badge')?.innerText.toLowerCase() || '';
+        const match = !filter || title.includes(filter) || desc.includes(filter) || badge.includes(filter);
+        card.classList.toggle('hidden', !match);
+        if (match) hasVisible = true;
+    });
+
+    cats.forEach(cat => {
+        const vis = cat.querySelectorAll('.card:not(.hidden)').length;
+        cat.style.display = vis === 0 ? 'none' : '';
+    });
+
+    document.getElementById('noResults').style.display =
+        (!hasVisible && filter !== '') ? 'flex' : 'none';
+}
+
+/* ── TOAST ── */
+let toastTimer;
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ── SCROLL SPY ── */
+function initScrollSpy() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.category, #pinnedSection');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(a => a.classList.remove('active'));
+                const id = entry.target.id === 'pinnedSection' ? 'pinned' : entry.target.id;
+                const active = document.querySelector(`.nav-link[href="#${id}"]`);
+                if (active) active.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+}
+</script>
 </body>
 </html>
